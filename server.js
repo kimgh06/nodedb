@@ -8,16 +8,16 @@ const port = 3333;
 let sql = '';
 let cnt = 0;
 
-app.use(bp.json());
-app.use(cors());
-app.use(bp.urlencoded({ extended: false }));
-
 const connection = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
   password: '1234',
   database: 'madang'
 });
+
+app.use(bp.json());
+app.use(cors());
+app.use(bp.urlencoded({ extended: false }));
 
 connection.connect(e => {
   if (e) console.log(e.stack);
@@ -45,14 +45,13 @@ app.get('/select', (rq, rs) => {
 app.post('/find', (rq, rs) => {
   try {
     let result;
-    sql = `select * from customer where bookid=?`;
-    connection.query(sql, [rq.body.id], (e, r, f) => {
-      result = r;
+    sql = `select * from book where bookid=${rq.body.id}`;
+    connection.query(sql, (e, r, f) => {
+      console.log(r);
+      rs.send(r);
     });
-    console.log(result);
-    rs.send(result);
   } catch (e) {
-    // rs.send(e);
+    console.log(e);
   }
 });
 

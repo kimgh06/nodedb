@@ -10,12 +10,12 @@ function App() {
         {i.bookid} {i.bookname} {i.publisher} {i.price}
       </div>)} */}
       {list && list.map((i, n) => <div key={n}>
-        {i.id}
+        {i.bookid} {i.bookname} {i.publisher} {i.price}
       </div>)}
       <input value={word} onChange={e => serWord(v => e.target.value)} />
-      <button onClick={e => {
-        axios.post('http://localhost:3333/find', { id: word }).then(e => {
-          // setList(e.data);
+      <button onClick={async function (e) {
+        await axios.post('http://localhost:3333/find', { id: word }).then(e => {
+          setList(e.data);
           console.log(e.data);
         })
       }}>load</button>
