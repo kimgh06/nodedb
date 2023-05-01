@@ -3,6 +3,7 @@ const app = express();
 const mysql = require('mysql2');
 const port = 3333;
 let sql = '';
+let cnt = 0;
 
 const connection = mysql.createConnection({
   host: '127.0.0.1',
@@ -29,13 +30,13 @@ app.get('/select', (rq, rs) => {
       rs.send(r);
       // console.log(r);
     });
-    console.log(rq.socket.remoteAddress);
+    console.log(rq.socket.remoteAddress, ++cnt);
   } catch (e) {
     console.log(e);
   }
 });
 
-app.get('/insert', (rq, rs) => {
+app.post('/insert', (rq, rs) => {
   sql = ''
 });
 

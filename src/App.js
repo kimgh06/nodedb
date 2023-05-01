@@ -6,14 +6,10 @@ function App() {
   return (
     <div className="App">
       {list && list.map((i, n) => <div>
-        {i.bookid}
-        {i.bookname}
-        {i.publisher}
-        {i.price}
+        {i.bookid} {i.bookname} {i.publisher} {i.price}
       </div>)}
       <button onClick={e => {
         axios.get('http://localhost:3333/select').then(e => {
-          console.log(e.data);
           setList(e.data);
         })
       }}>load</button>
