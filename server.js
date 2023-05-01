@@ -24,10 +24,15 @@ app.get('/', (rq, rs) => {
 
 app.get('/select', (rq, rs) => {
   sql = "select * from book";
-  connection.query(sql, (e, r, f) => {
-    rs.send(r);
-    console.log(r);
-  });
+  try {
+    connection.query(sql, (e, r, f) => {
+      rs.send(r);
+      // console.log(r);
+    });
+    console.log(rq.socket.remoteAddress);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app.get('/insert', (rq, rs) => {
