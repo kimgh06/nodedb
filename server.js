@@ -47,7 +47,6 @@ app.post('/find', (rq, rs) => {
     let result;
     sql = `select * from book where bookid=${rq.body.id}`;
     connection.query(sql, (e, r, f) => {
-      console.log(r);
       rs.send(r);
     });
   } catch (e) {
