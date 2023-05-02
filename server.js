@@ -41,6 +41,12 @@ app.get('/select', (rq, rs) => {
   }
 });
 
+app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 app.post('/find', (rq, rs) => {
   try {
     let result;
