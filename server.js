@@ -25,7 +25,6 @@ connection.connect(e => {
 });
 
 app.get('/', (rq, rs) => {
-  // rs.sendFile('./public/index.html');
   rs.send('root point');
   console.log(rq.socket.remoteAddress);
 });
