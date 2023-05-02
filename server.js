@@ -44,7 +44,7 @@ app.get('/select', (rq, rs) => {
 app.post('/find', (rq, rs) => {
   try {
     let result;
-    sql = `select * from book where bookid=${rq.body.id}`;
+    sql = `select * from customer where custid=${rq.body.id}`;
     connection.query(sql, (e, r, f) => {
       rs.send(r);
     });

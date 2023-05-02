@@ -16,7 +16,7 @@ function App() {
       <button onClick={async function (e) {
         await axios.post('http://localhost:3333/find', { id: word }).then(e => {
           setList(e.data);
-          // console.log(e.data);
+          console.log(e.data);
         })
       }}>load</button>
     </div>
