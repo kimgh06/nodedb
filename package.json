@@ -47,10 +47,7 @@
     ]
   },
   "reactSnap": {
-    "include": [
-      "/index",
-      "/"
-    ]
+    "publicPath": "/mysite"
   },
-  "homepage": "/landing-page"
+  "homepage": "."
 }
