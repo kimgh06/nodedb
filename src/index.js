@@ -1,7 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line
 import { hydrate, render } from 'react-dom';
-import ReactDOM from 'react-dom/client';
 import App from './App';
 
 const cont = document.getElementById('root');
