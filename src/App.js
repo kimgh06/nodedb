@@ -18,8 +18,11 @@ function App() {
 
 function A() { // eslint-disable-next-line
   const [pr, setPr] = useSearchParams();
+  const [text, setText] = useState('');
   return <div className="A">
-    {pr.get('id').toString()}
+    {pr.get('id') && pr.get('id').toString()}
+    <input onChange={e => setText(e.target.value)} />
+    <button onClick={e => window.document.location.href = `?id=${text}`}>click</button>
   </div>;
 }
 // eslint-disable-next-line
