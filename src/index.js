@@ -10,14 +10,14 @@ if (cont.hasChildNodes()) {
   hydrate(
     <React.StrictMode>
       <App />
-    </React.StrictMode>
+    </React.StrictMode>, cont
   );
 }
 else {
   dom.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>
+    </React.StrictMode>, cont
   );
 }
 
