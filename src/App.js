@@ -1,11 +1,32 @@
 import axios from "axios";
 import { useState } from "react";
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 
 function App() {
+  return (
+    <div className="App">
+      {/* <Load /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path={'/:id'} element={<Detail />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+function Detail() {
+  const { id } = useParams();
+  return <div className="detail">
+    {id}
+  </div>;
+}
+
+function Load() {
   const [list, setList] = useState([]);
   const [word, serWord] = useState('');
   return (
-    <div className="App">
+    <div className="load">
       {/* {list && list.map((i, n) => <div key={n}>
         {i.bookid} {i.bookname} {i.publisher} {i.price}
       </div>)} */}
