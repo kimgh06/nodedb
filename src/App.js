@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes, useParams, useSearchParams } from "react-router-dom";
+import cat from './download.jpg';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function A() { // eslint-disable-next-line
     {pr.get('id') && pr.get('id').toString()}
     <input onChange={e => setText(e.target.value)} />
     <button onClick={e => setPr(`?id=${text}`)}>click</button>
+    <img src={cat} alt='cat' />
   </div>;
 }
 // eslint-disable-next-line
