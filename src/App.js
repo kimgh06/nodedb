@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useParams, useSearchParams } from "react-router-dom";
 
 function App() {
   return (
@@ -8,11 +8,19 @@ function App() {
       {/* <Load /> */}
       <BrowserRouter>
         <Routes>
-          <Route path={'/:id'} element={<Detail />} />
+          {/* <Route path={'/:id'} element={<Detail />} /> */}
+          <Route path="/" element={<A />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
+}
+
+function A() {
+  const [pr, setPr] = useSearchParams();
+  return <div className="A">
+    {pr.get('id').toString()}
+  </div>;
 }
 
 function Detail() {
