@@ -1,24 +1,23 @@
 import React from 'react';
-// eslint-disable-next-line
-import { hydrate, render } from 'react-dom';
-import { ReactDOM } from 'react';
+import { hydrate } from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 
 const cont = document.getElementById('root');
-const root = ReactDOM.createRoot(cont);
+const dom = ReactDOM.createRoot(cont);
 
 if (cont.hasChildNodes()) {
   hydrate(
     <React.StrictMode>
       <App />
-    </React.StrictMode>, cont
+    </React.StrictMode>
   );
 }
 else {
-  root.render(
+  dom.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>, cont
+    </React.StrictMode>
   );
 }
 
