@@ -13,7 +13,7 @@ if (cont.hasChildNodes()) {
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  )
+  );
 }
 else {
   root.render(
