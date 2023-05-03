@@ -16,20 +16,20 @@ function App() {
   );
 }
 
-function A() {
+function A() { // eslint-disable-next-line
   const [pr, setPr] = useSearchParams();
   return <div className="A">
     {pr.get('id').toString()}
   </div>;
 }
-
+// eslint-disable-next-line
 function Detail() {
   const { id } = useParams();
   return <div className="detail">
     {id}
   </div>;
 }
-
+// eslint-disable-next-line
 function Load() {
   const [list, setList] = useState([]);
   const [word, serWord] = useState('');
