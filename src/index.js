@@ -5,21 +5,19 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 const cont = document.getElementById('root');
-const root = ReactDOM.createRoot(cont);
 
 if (cont.hasChildNodes()) {
-  ReactDOM.hydrateRoot(
-    cont,
+  hydrate(
     <React.StrictMode>
       <App />
-    </React.StrictMode>
+    </React.StrictMode>, cont
   );
 }
 else {
-  root.render(
+  render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>
+    </React.StrictMode>, cont
   );
 }
 
