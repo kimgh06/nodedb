@@ -22,7 +22,7 @@ function A() { // eslint-disable-next-line
   return <div className="A">
     {pr.get('id') && pr.get('id').toString()}
     <input onChange={e => setText(e.target.value)} />
-    <button onClick={e => window.document.location.href = `?id=${text}`}>click</button>
+    <button onClick={e => setPr(`?id=${text}`)}>click</button>
   </div>;
 }
 // eslint-disable-next-line
