@@ -1,18 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import cat from './download.jpg';
 
 function App() {
   return (
     <div className="App">
       <Load />
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
-          {/* <Route path={'/:id'} element={<Detail />} /> */}
-          {/* <Route path="/" element={<A />} /> */}
+          <Route path={'/:id'} element={<Detail />} />
+          <Route path="/" element={<A />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </div>
   );
 }
@@ -58,10 +58,10 @@ function Load() {
         })
       }}>load</button>
       <div>
-        <input onChange={e => setPostist(a => [{ ...a, bookid: e.target.value }])} value={postlist.bookid} placeholder="id" />
-        <input onChange={e => setPostist(a => [{ ...a, bookname: e.target.value }])} value={postlist.bookname} placeholder="bookname" />
-        <input onChange={e => setPostist(a => [{ ...a, publisher: e.target.value }])} value={postlist.publisher} placeholder="publisher" />
-        <input onChange={e => setPostist(a => [{ ...a, price: e.target.value }])} value={postlist.price} placeholder="price" />
+        <input onChange={e => setPostist(a => ({ ...a, bookid: e.target.value }))} value={postlist.bookid} placeholder="id" />
+        <input onChange={e => setPostist(a => ({ ...a, bookname: e.target.value }))} value={postlist.bookname} placeholder="bookname" />
+        <input onChange={e => setPostist(a => ({ ...a, publisher: e.target.value }))} value={postlist.publisher} placeholder="publisher" />
+        <input onChange={e => setPostist(a => ({ ...a, price: e.target.value }))} value={postlist.price} placeholder="price" />
         <button onClick={async e => {
           await axios.post('http://localhost:3333/insert', {
             id: postlist.bookid, name: postlist.bookname, publisher: postlist.publisher, price: postlist.price
