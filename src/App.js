@@ -39,6 +39,7 @@ function Load() {
   const [list, setList] = useState([]);
   const [word, serWord] = useState('');
   const [postlist, setPostist] = useState({ bookid: '', bookname: '', publisher: '', price: '' });
+  const [todel, setTodel] = useState('');
   useEffect(e => {
     setPostist({ bookid: '', bookname: '', publisher: '', price: '' });
   }, []);
@@ -71,6 +72,17 @@ function Load() {
             console.log(e);
           });
         }}>삽입</button>
+      </div>
+      <div>
+        <input onChange={e => setTodel(a => e.target.value)} value={todel} />
+        <button onClick={async e => {
+          await axios.post('http://localhost:3333/delete', { id: todel })
+            .then(e => {
+              console.log(e);
+            }).catch(e => {
+              console.log(e);
+            });
+        }}>삭제</button>
       </div>
     </div>
   );

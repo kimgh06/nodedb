@@ -8,16 +8,14 @@ const dom = ReactDOM.createRoot(cont);
 
 if (cont.hasChildNodes()) {
   hydrate(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>, cont
+    <App />
+    , cont
   );
 }
 else {
   dom.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>, cont
+    <App />
+    , cont
   );
 }
 
