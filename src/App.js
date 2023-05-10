@@ -58,10 +58,10 @@ function Load() {
         })
       }}>load</button>
       <div>
-        <input onChange={e => setPostist(a => ({ ...a, bookid: e.target.value }))} value={postlist.bookid} placeholder="id" />
-        <input onChange={e => setPostist(a => ({ ...a, bookname: e.target.value }))} value={postlist.bookname} placeholder="bookname" />
-        <input onChange={e => setPostist(a => ({ ...a, publisher: e.target.value }))} value={postlist.publisher} placeholder="publisher" />
-        <input onChange={e => setPostist(a => ({ ...a, price: e.target.value }))} value={postlist.price} placeholder="price" />
+        <input onChange={e => setPostist(a => ({ ...a, bookid: e.target.value }))} value={postlist.bookid} placeholder="id" type={'number'} />
+        <input onChange={e => setPostist(a => ({ ...a, bookname: e.target.value }))} value={postlist.bookname} placeholder="bookname" type={'text'} />
+        <input onChange={e => setPostist(a => ({ ...a, publisher: e.target.value }))} value={postlist.publisher} placeholder="publisher" type={'text'} />
+        <input onChange={e => setPostist(a => ({ ...a, price: e.target.value }))} value={postlist.price} placeholder="price" type={'number'} />
         <button onClick={async e => {
           await axios.post('http://localhost:3333/insert', {
             id: postlist.bookid, name: postlist.bookname, publisher: postlist.publisher, price: postlist.price
