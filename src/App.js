@@ -21,9 +21,11 @@ function Detail() {
   const [list, setList] = useState({ bookid: 'Loading', bookname: '', publisher: '', price: '' });
   const loading = async e => {
     await axios.post('http://localhost:3333/find', { id: id }).then(e => {
-      setList(e.data[0] !== undefined ? e.data[0] : { bookid: 'NOT FOUND', bookname: '', publisher: '', price: '' });
+      setList(e.data[0]);
     }).catch(e => {
-      console.log(e);
+      if (e.response.status === 404) {
+        setList({ bookid: 'NOT FOUND', bookname: '', publisher: '', price: '' });
+      }
     });
   }
   useEffect(e => {
