@@ -39,9 +39,11 @@ function Load() {
   const [list, setList] = useState([]);
   const [word, serWord] = useState('');
   const [postlist, setPostist] = useState({ bookid: '', bookname: '', publisher: '', price: '' });
+  const [toupdate, setToupdate] = useState({ bookid: '', bookname: '', publisher: '', price: '' });
   const [todel, setTodel] = useState('');
   useEffect(e => {
     setPostist({ bookid: '', bookname: '', publisher: '', price: '' });
+    setToupdate({ bookid: '', bookname: '', publisher: '', price: '' });
   }, []);
   return (
     <div className="load">
@@ -83,6 +85,21 @@ function Load() {
               console.log(e);
             });
         }}>삭제</button>
+      </div>
+      <div>
+        <input onChange={e => setToupdate(a => ({ ...a, bookid: e.target.value }))} value={toupdate.bookid} placeholder="id" type={'number'} />
+        <input onChange={e => setToupdate(a => ({ ...a, bookname: e.target.value }))} value={toupdate.bookname} placeholder="bookname" type={'text'} />
+        <input onChange={e => setToupdate(a => ({ ...a, publisher: e.target.value }))} value={toupdate.publisher} placeholder="publisher" type={'text'} />
+        <input onChange={e => setToupdate(a => ({ ...a, price: e.target.value }))} value={toupdate.price} placeholder="price" type={'number'} />
+        <button onClick={async e => {
+          await axios.post('http://localhost:3333/update', {
+            id: toupdate.bookid, name: toupdate.bookname, publisher: toupdate.publisher, price: toupdate.price
+          }).then(e => {
+            console.log(e);
+          }).catch(e => {
+            console.log(e);
+          });
+        }}>수정</button>
       </div>
     </div>
   );
