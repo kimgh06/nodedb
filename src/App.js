@@ -1,37 +1,39 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes, useParams, useSearchParams } from "react-router-dom";
 import cat from './download.jpg';
 
 function App() {
   return (
     <div className="App">
-      <Load />
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path={'/:id'} element={<Detail />} />
-          <Route path="/" element={<A />} />
+          <Route path="/" element={<Load />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </div>
   );
 }
 // eslint-disable-next-line
-function A() {
-  const [pr, setPr] = useSearchParams();
-  const [text, setText] = useState('');
-  return <div className="A">
-    {pr.get('id') && pr.get('id').toString()}
-    <input onChange={e => setText(e.target.value)} />
-    <button onClick={e => setPr(`?id=${text}`)}>click</button>
-    <img src={cat} alt='cat' />
-  </div>;
-}
-// eslint-disable-next-line
 function Detail() {
   const { id } = useParams();
+  const [list, setList] = useState({ bookid: 'Loading', bookname: '', publisher: '', price: '' });
+  const loading = async e => {
+    await axios.post('http://localhost:3333/find', { id: id }).then(e => {
+      setList(e.data[0] !== undefined ? e.data[0] : { bookid: 'NOT FOUND', bookname: '', publisher: '', price: '' });
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+  useEffect(e => {
+    loading();
+  }, []);
   return <div className="detail">
-    {id}
+    {list?.bookid}
+    {list?.bookname}
+    {list?.publisher}
+    {list?.price}
   </div>;
 }
 // eslint-disable-next-line
@@ -47,17 +49,33 @@ function Load() {
   }, []);
   return (
     <div className="load">
-      {/* {list && list.map((i, n) => <div key={n}>
-        {i.bookid} {i.bookname} {i.publisher} {i.price}
-      </div>)} */}
-      {list && list.map((i, n) => <div key={n}>
-        {i.bookid} {i.bookname} {i.publisher} {i.price}
-      </div>)}
+      <table border='1'>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>bookid</td>
+            <td>publisher</td>
+            <td>price</td>
+          </tr>
+          {list && list.map((i, n) => <tr key={n}>
+            <td><Link to={`/${i.bookid}`}>{i.bookid}</Link></td>
+            <td>{i.bookname}</td>
+            <td>{i.publisher}</td>
+            <td>{i.price}</td>
+          </tr>)}
+        </tbody>
+      </table>
+      <div>
+        <button onClick={async function (e) {
+          await axios.post('http://localhost:3333/loadall', { id: word }).then(e => {
+            setList(e.data);
+          })
+        }}>LoadAll</button>
+      </div>
       <input value={word} onChange={e => serWord(v => e.target.value)} />
       <button onClick={async function (e) {
         await axios.post('http://localhost:3333/find', { id: word }).then(e => {
           setList(e.data);
-          // console.log(e.data);
         })
       }}>load</button>
       <div>
