@@ -22,7 +22,9 @@ function Detail() {
   const [list, setList] = useState([]);
   const loading = async e => {
     await axios.post('http://localhost:3333/find', { id: id }).then(e => {
-      setList(e.data[0]);
+      let thelist = e.data[0];
+      thelist.maintext = thelist.maintext.replace(/\n/g, '\n');
+      setList(thelist);
     }).catch(e => {
       if (e.response.status === 404) {
         setList({ id: 'NOT FOUND', title: '', maintext: '' });
@@ -54,7 +56,7 @@ function Load() {
     let returntext;
     returntext = text.replace(/'/g, "\\'");
     returntext = returntext.replace(/"/g, '\\"');
-    console.log(returntext);
+    returntext = returntext.replace(/`/g, '\\`');
     return returntext;
   }
 
@@ -75,7 +77,6 @@ function Load() {
       <div>
         <button onClick={async function (e) {
           await axios.post('http://localhost:3333/loadall', { id: word }).then(e => {
-            console.log(e.data);
             setList(e.data);
           })
         }}>LoadAll</button>
@@ -113,13 +114,18 @@ function Load() {
         }}>삭제</button>
       </div>
       <div>
-        <input onChange={e => setToupdate(a => ({ ...a, bookid: e.target.value }))} value={toupdate.bookid} placeholder="id" type={'number'} />
-        <input onChange={e => setToupdate(a => ({ ...a, bookname: e.target.value }))} value={toupdate.bookname} placeholder="bookname" type={'text'} />
-        <input onChange={e => setToupdate(a => ({ ...a, publisher: e.target.value }))} value={toupdate.publisher} placeholder="publisher" type={'text'} />
-        <input onChange={e => setToupdate(a => ({ ...a, price: e.target.value }))} value={toupdate.price} placeholder="price" type={'number'} />
+        <input onChange={e => setToupdate(a => ({ ...a, id: e.target.value }))} value={toupdate.id} placeholder="id" type={'number'} />
+        <button onClick={async function (e) {
+          await axios.post('http://localhost:3333/find', { id: toupdate.id }).then(e => {
+            setToupdate(a => ({ ...a, title: e.data[0]?.title, maintext: e.data[0]?.maintext }));
+          })
+        }}>수정목록 가져오기</button>
+        <br />
+        <input onChange={e => setToupdate(a => ({ ...a, title: e.target.value }))} value={toupdate.title} placeholder="title" type={'text'} /><br />
+        <textarea onChange={e => setToupdate(a => ({ ...a, maintext: e.target.value }))} value={toupdate.maintext} placeholder="maintext" type={'text'} />
         <button onClick={async e => {
           await axios.post('http://localhost:3333/update', {
-            id: toupdate.bookid, name: toupdate.bookname, publisher: toupdate.publisher, price: toupdate.price
+            id: toupdate.id, name: toupdate.title, maintext: escapeText(toupdate.maintext)
           }).then(e => {
             console.log(e);
           }).catch(e => {
