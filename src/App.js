@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Link, Route, Routes, useParams, useSearchParams } from "react-router-dom";
-import cat from './download.jpg';
+import { BrowserRouter, Link, Route, Routes, useParams } from "react-router-dom";
+import Showdown from "showdown";
 
 function App() {
   return (
@@ -17,59 +17,65 @@ function App() {
 }
 // eslint-disable-next-line
 function Detail() {
+  const converter = new Showdown.Converter();
   const { id } = useParams();
-  const [list, setList] = useState({ bookid: 'Loading', bookname: '', publisher: '', price: '' });
+  const [list, setList] = useState([]);
   const loading = async e => {
     await axios.post('http://localhost:3333/find', { id: id }).then(e => {
       setList(e.data[0]);
     }).catch(e => {
       if (e.response.status === 404) {
-        setList({ bookid: 'NOT FOUND', bookname: '', publisher: '', price: '' });
+        setList({ id: 'NOT FOUND', title: '', maintext: '' });
       }
     });
   }
   useEffect(e => {
     loading();
+    //eslint-disable-next-line
   }, []);
   return <div className="detail">
-    {list?.bookid}
-    {list?.bookname}
-    {list?.publisher}
-    {list?.price}
+    <h1>{list?.title}</h1>
+    <div dangerouslySetInnerHTML={{ __html: converter.makeHtml(list?.maintext) }}></div>
   </div>;
 }
 // eslint-disable-next-line
 function Load() {
   const [list, setList] = useState([]);
   const [word, serWord] = useState('');
-  const [postlist, setPostist] = useState({ bookid: '', bookname: '', publisher: '', price: '' });
-  const [toupdate, setToupdate] = useState({ bookid: '', bookname: '', publisher: '', price: '' });
+  const [postlist, setPostist] = useState({ id: '', title: '', maintext: '' });
+  const [toupdate, setToupdate] = useState({ id: '', title: '', maintext: '' });
   const [todel, setTodel] = useState('');
   useEffect(e => {
-    setPostist({ bookid: '', bookname: '', publisher: '', price: '' });
-    setToupdate({ bookid: '', bookname: '', publisher: '', price: '' });
+    setPostist({ id: '', title: '', maintext: '' });
+    setToupdate({ id: '', title: '', maintext: '' });
   }, []);
+
+  const escapeText = text => {
+    let returntext;
+    returntext = text.replace(/'/g, "\\'");
+    returntext = returntext.replace(/"/g, '\\"');
+    console.log(returntext);
+    return returntext;
+  }
+
   return (
     <div className="load">
       <table border='1'>
         <tbody>
           <tr>
             <td>id</td>
-            <td>bookid</td>
-            <td>publisher</td>
-            <td>price</td>
+            <td>title</td>
           </tr>
           {list && list.map((i, n) => <tr key={n}>
-            <td><Link to={`/${i.bookid}`}>{i.bookid}</Link></td>
-            <td>{i.bookname}</td>
-            <td>{i.publisher}</td>
-            <td>{i.price}</td>
+            <td><Link to={`/${i.id}`}>{i.id}</Link></td>
+            <td>{i.title}</td>
           </tr>)}
         </tbody>
       </table>
       <div>
         <button onClick={async function (e) {
           await axios.post('http://localhost:3333/loadall', { id: word }).then(e => {
+            console.log(e.data);
             setList(e.data);
           })
         }}>LoadAll</button>
@@ -81,13 +87,13 @@ function Load() {
         })
       }}>load</button>
       <div>
-        <input onChange={e => setPostist(a => ({ ...a, bookid: e.target.value }))} value={postlist.bookid} placeholder="id" type={'number'} />
-        <input onChange={e => setPostist(a => ({ ...a, bookname: e.target.value }))} value={postlist.bookname} placeholder="bookname" type={'text'} />
-        <input onChange={e => setPostist(a => ({ ...a, publisher: e.target.value }))} value={postlist.publisher} placeholder="publisher" type={'text'} />
-        <input onChange={e => setPostist(a => ({ ...a, price: e.target.value }))} value={postlist.price} placeholder="price" type={'number'} />
+        <input onChange={e => setPostist(a => ({ ...a, id: e.target.value }))} value={postlist.id} placeholder="id" type={'number'} />
+        <input onChange={e => setPostist(a => ({ ...a, title: e.target.value }))} value={postlist.title} placeholder="title" type={'text'} />
+        <br />
+        <textarea onChange={e => setPostist(a => ({ ...a, maintext: e.target.value }))} value={postlist.maintext} placeholder="maintext" type={'text'} />
         <button onClick={async e => {
           await axios.post('http://localhost:3333/insert', {
-            id: postlist.bookid, name: postlist.bookname, publisher: postlist.publisher, price: postlist.price
+            id: postlist.id, name: postlist.title, maintext: escapeText(postlist.maintext)
           }).then(e => {
             console.log(e);
           }).catch(e => {

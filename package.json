@@ -10,6 +10,7 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
+    "marked": "^5.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.2.4",
     "nodeman": "^1.1.2",
@@ -19,14 +20,21 @@
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "react-snap": "^1.23.0",
-    "react-snp": "^1.0.5"
+    "react-snp": "^1.0.5",
+    "rehype-stringify": "^9.0.3",
+    "remark": "^14.0.2",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "showdown": "^2.1.0",
+    "unified": "^10.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "postbuild": "react-snap",
+    "dev": "nodemon ./server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +55,7 @@
     ]
   },
   "reactSnap": {
-    "include":[
+    "include": [
       "/"
     ]
   },
