@@ -23,7 +23,6 @@ function Detail() {
   const loading = async e => {
     await axios.post('http://localhost:3333/find', { id: id }).then(e => {
       let thelist = e.data[0];
-      thelist.maintext = thelist.maintext.replace(/\n/g, '\n');
       setList(thelist);
     }).catch(e => {
       if (e.response.status === 404) {
