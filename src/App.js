@@ -143,7 +143,7 @@ function Load() {
             <td>title</td>
             <td>date</td>
           </tr>
-          {list && list.map((i, n) => <tr key={n}>
+          {list?.map((i, n) => <tr key={n}>
             <td><Link to={`/${i.id}`}>{i.id}</Link></td>
             <td>{i.title}</td>
             <td>{i?.date}</td>
